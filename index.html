@@ -10,6 +10,7 @@
   <link rel="apple-touch-icon" href="icons/icon-192.png" />
 </head>
 <body>
+  <!-- Pasek górny -->
   <header class="topbar">
     <h1>POS</h1>
     <nav class="tabs">
@@ -20,6 +21,7 @@
     </nav>
   </header>
 
+  <!-- Główna zawartość -->
   <main>
     <!-- Sprzedaż -->
     <section id="tab-sale" class="tab-content active">
@@ -125,8 +127,10 @@
     </section>
   </main>
 
-  <footer class="status" id="status-msg"></footer>
+  <!-- Stopka -->
+  <footer class="status" id="status-msg">Gotowy do pracy</footer>
 
+  <!-- Skrypty -->
   <script src="app.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
