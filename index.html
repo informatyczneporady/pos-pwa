@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>POS PWA</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#0a84ff" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>POS</h1>
+    <nav class="tabs">
+      <button data-tab="sale" class="tab active">Sprzedaż</button>
+      <button data-tab="inventory" class="tab">Magazyn</button>
+      <button data-tab="orders" class="tab">Zamówienia</button>
+      <button data-tab="settings" class="tab">Ustawienia</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Sprzedaż -->
+    <section id="tab-sale" class="tab-content active">
+      <div class="grid">
+        <aside class="panel">
+          <h2>Kategorie</h2>
+          <ul id="category-list"></ul>
+          <h2>Produkty</h2>
+          <ul id="product-list"></ul>
+        </aside>
+        <section class="panel">
+          <h2>Koszyk</h2>
+          <ul id="cart-list"></ul>
+          <div class="summary">
+            <p><strong>Suma przed rabatem:</strong> <span id="sum-before">0.00</span> zł</p>
+            <p><strong>Rabat:</strong> <span id="discount-total">0.00</span> zł</p>
+            <p><strong>Do zapłaty:</strong> <span id="sum-after">0.00</span> zł</p>
+          </div>
+          <div class="payments">
+            <label>Gotówka: <input id="cash-paid" type="text" inputmode="decimal" placeholder="0,00" /></label>
+            <label>Karta/Inne: <input id="card-paid" type="text" inputmode="decimal" placeholder="0,00" /></label>
+            <label><input id="show-change" type="checkbox" checked /> Pokaż resztę tylko przy gotówce</label>
+            <p><strong>Reszta:</strong> <span id="change-amount">0.00</span> zł</p>
+          </div>
+          <div class="actions">
+            <button id="btn-open-shift">Otwórz zmianę</button>
+            <button id="btn-checkout" class="primary">Zakończ sprzedaż</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- Magazyn -->
+    <section id="tab-inventory" class="tab-content">
+      <h2>Zarządzanie zapasami</h2>
+      <ul id="inventory-list"></ul>
+    </section>
+
+    <!-- Zamówienia -->
+    <section id="tab-orders" class="tab-content">
+      <div class="grid">
+        <section class="panel">
+          <h2>Nowe zamówienie</h2>
+          <label><input id="order-paynow" type="checkbox" /> Płać od razu</label>
+          <input id="order-notes" type="text" placeholder="Notatka (opcjonalnie)" />
+          <button id="order-create" class="primary">Złóż zamówienie</button>
+          <div class="summary">
+            <p><strong>Pozycje w koszyku:</strong> <span id="order-cart-count">0</span></p>
+            <p><strong>Suma:</strong> <span id="order-sum">0.00</span> zł</p>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>Zamówienia</h2>
+          <ul id="orders-list"></ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- Ustawienia -->
+    <section id="tab-settings" class="tab-content">
+      <h2>Ustawienia</h2>
+      <div class="grid">
+        <section class="panel">
+          <h3>Profil</h3>
+          <label>Imię: <input id="profile-name" type="text" /></label>
+          <label>Email: <input id="profile-email" type="email" /></label>
+          <label>Nazwa firmy: <input id="profile-business" type="text" /></label>
+          <button id="profile-save">Zapisz profil</button>
+        </section>
+
+        <section class="panel">
+          <h3>Promocje</h3>
+          <label>Nazwa: <input id="promo-name" type="text" /></label>
+          <label>Procent (%): <input id="promo-pct" type="text" inputmode="decimal" /></label>
+          <label>Stała zniżka (zł): <input id="promo-fixed" type="text" inputmode="decimal" /></label>
+          <button id="promo-add">Dodaj promocję</button>
+          <ul id="promos-list"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>Transakcje</h3>
+          <ul id="transactions-list"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>Zmiany kasowe</h3>
+          <div id="shift-current"></div>
+          <label>Gotówka początkowa: <input id="shift-open-cash" type="text" inputmode="decimal" /></label>
+          <label>Gotówka końcowa: <input id="shift-close-cash" type="text" inputmode="decimal" /></label>
+          <input id="shift-notes" type="text" placeholder="Notatka do zamknięcia" />
+          <div class="actions">
+            <button id="shift-open">Otwórz zmianę</button>
+            <button id="shift-close" class="danger">Zamknij zmianę</button>
+          </div>
+          <ul id="shifts-list"></ul>
+        </section>
+
+        <section class="panel">
+          <h3>Zwroty</h3>
+          <div id="refund-panel"></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="status" id="status-msg"></footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</body>
+</html>
